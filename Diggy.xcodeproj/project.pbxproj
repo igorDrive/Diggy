@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -15,6 +15,12 @@
 		36DA9DF3253A66FE001333A4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 36DA9DF1253A66FE001333A4 /* LaunchScreen.storyboard */; };
 		36DA9DFE253A66FE001333A4 /* DiggyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36DA9DFD253A66FE001333A4 /* DiggyTests.swift */; };
 		36DA9E09253A66FE001333A4 /* DiggyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36DA9E08253A66FE001333A4 /* DiggyUITests.swift */; };
+		36DA9E39253B1268001333A4 /* APIRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36DA9E38253B1268001333A4 /* APIRouter.swift */; };
+		36DA9E3E253B1507001333A4 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36DA9E3D253B1507001333A4 /* APIClient.swift */; };
+		36DA9E43253B16C8001333A4 /* Job.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36DA9E42253B16C8001333A4 /* Job.swift */; };
+		AF4EC5668950D7BF9D3D57DF /* Pods_Diggy_DiggyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF1A72BEF84DF177DAC09D8 /* Pods_Diggy_DiggyUITests.framework */; };
+		C41433479EC789A1F17C8832 /* Pods_Diggy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83742E5B2151D78A0B1A5753 /* Pods_Diggy.framework */; };
+		F41D8A0C1456154407602E0B /* Pods_DiggyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E16E193B551EAE53768E2F87 /* Pods_DiggyTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +41,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0741BDDA3DCC3EA6C8912E02 /* Pods-Diggy-DiggyUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Diggy-DiggyUITests.debug.xcconfig"; path = "Target Support Files/Pods-Diggy-DiggyUITests/Pods-Diggy-DiggyUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		0EAD3C806065FE8CB2A70522 /* Pods-DiggyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DiggyTests.debug.xcconfig"; path = "Target Support Files/Pods-DiggyTests/Pods-DiggyTests.debug.xcconfig"; sourceTree = "<group>"; };
+		1492A6609A81614873F18DE3 /* Pods-Diggy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Diggy.release.xcconfig"; path = "Target Support Files/Pods-Diggy/Pods-Diggy.release.xcconfig"; sourceTree = "<group>"; };
 		36DA9DE3253A66FD001333A4 /* Diggy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Diggy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		36DA9DE6253A66FD001333A4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		36DA9DE8253A66FD001333A4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -49,6 +58,15 @@
 		36DA9E04253A66FE001333A4 /* DiggyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DiggyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		36DA9E08253A66FE001333A4 /* DiggyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiggyUITests.swift; sourceTree = "<group>"; };
 		36DA9E0A253A66FE001333A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		36DA9E38253B1268001333A4 /* APIRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRouter.swift; sourceTree = "<group>"; };
+		36DA9E3D253B1507001333A4 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		36DA9E42253B16C8001333A4 /* Job.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Job.swift; sourceTree = "<group>"; };
+		5535A8FED459179DDFFB7B3F /* Pods-Diggy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Diggy.debug.xcconfig"; path = "Target Support Files/Pods-Diggy/Pods-Diggy.debug.xcconfig"; sourceTree = "<group>"; };
+		5BF1A72BEF84DF177DAC09D8 /* Pods_Diggy_DiggyUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Diggy_DiggyUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		83742E5B2151D78A0B1A5753 /* Pods_Diggy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Diggy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		91AFFB5B574793A6C0550A93 /* Pods-Diggy-DiggyUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Diggy-DiggyUITests.release.xcconfig"; path = "Target Support Files/Pods-Diggy-DiggyUITests/Pods-Diggy-DiggyUITests.release.xcconfig"; sourceTree = "<group>"; };
+		A613E94EFBB8AA52AC1169F4 /* Pods-DiggyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DiggyTests.release.xcconfig"; path = "Target Support Files/Pods-DiggyTests/Pods-DiggyTests.release.xcconfig"; sourceTree = "<group>"; };
+		E16E193B551EAE53768E2F87 /* Pods_DiggyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DiggyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C41433479EC789A1F17C8832 /* Pods_Diggy.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F41D8A0C1456154407602E0B /* Pods_DiggyTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,6 +90,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AF4EC5668950D7BF9D3D57DF /* Pods_Diggy_DiggyUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +104,8 @@
 				36DA9DFC253A66FE001333A4 /* DiggyTests */,
 				36DA9E07253A66FE001333A4 /* DiggyUITests */,
 				36DA9DE4253A66FD001333A4 /* Products */,
+				E2B923CE94B4957DAFFD3025 /* Pods */,
+				50DC71C099BD505BD7DB2A0B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -99,13 +122,12 @@
 		36DA9DE5253A66FD001333A4 /* Diggy */ = {
 			isa = PBXGroup;
 			children = (
-				36DA9DE6253A66FD001333A4 /* AppDelegate.swift */,
-				36DA9DE8253A66FD001333A4 /* SceneDelegate.swift */,
-				36DA9DEA253A66FD001333A4 /* JobsViewController.swift */,
-				36DA9DEC253A66FD001333A4 /* Main.storyboard */,
-				36DA9DEF253A66FE001333A4 /* Assets.xcassets */,
-				36DA9DF1253A66FE001333A4 /* LaunchScreen.storyboard */,
-				36DA9DF4253A66FE001333A4 /* Info.plist */,
+				36DA9E22253B1077001333A4 /* Controller */,
+				36DA9E24253B1084001333A4 /* View */,
+				36DA9E23253B107F001333A4 /* Model */,
+				36DA9E25253B10B4001333A4 /* Main */,
+				36DA9E2D253B1155001333A4 /* API */,
+				36DA9E26253B10D7001333A4 /* Resources */,
 			);
 			path = Diggy;
 			sourceTree = "<group>";
@@ -128,6 +150,81 @@
 			path = DiggyUITests;
 			sourceTree = "<group>";
 		};
+		36DA9E22253B1077001333A4 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				36DA9DEA253A66FD001333A4 /* JobsViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		36DA9E23253B107F001333A4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				36DA9E42253B16C8001333A4 /* Job.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		36DA9E24253B1084001333A4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		36DA9E25253B10B4001333A4 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				36DA9DE6253A66FD001333A4 /* AppDelegate.swift */,
+				36DA9DE8253A66FD001333A4 /* SceneDelegate.swift */,
+				36DA9DEC253A66FD001333A4 /* Main.storyboard */,
+				36DA9DF1253A66FE001333A4 /* LaunchScreen.storyboard */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		36DA9E26253B10D7001333A4 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				36DA9DEF253A66FE001333A4 /* Assets.xcassets */,
+				36DA9DF4253A66FE001333A4 /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		36DA9E2D253B1155001333A4 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				36DA9E38253B1268001333A4 /* APIRouter.swift */,
+				36DA9E3D253B1507001333A4 /* APIClient.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		50DC71C099BD505BD7DB2A0B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				83742E5B2151D78A0B1A5753 /* Pods_Diggy.framework */,
+				5BF1A72BEF84DF177DAC09D8 /* Pods_Diggy_DiggyUITests.framework */,
+				E16E193B551EAE53768E2F87 /* Pods_DiggyTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E2B923CE94B4957DAFFD3025 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5535A8FED459179DDFFB7B3F /* Pods-Diggy.debug.xcconfig */,
+				1492A6609A81614873F18DE3 /* Pods-Diggy.release.xcconfig */,
+				0741BDDA3DCC3EA6C8912E02 /* Pods-Diggy-DiggyUITests.debug.xcconfig */,
+				91AFFB5B574793A6C0550A93 /* Pods-Diggy-DiggyUITests.release.xcconfig */,
+				0EAD3C806065FE8CB2A70522 /* Pods-DiggyTests.debug.xcconfig */,
+				A613E94EFBB8AA52AC1169F4 /* Pods-DiggyTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -135,9 +232,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 36DA9E0D253A66FE001333A4 /* Build configuration list for PBXNativeTarget "Diggy" */;
 			buildPhases = (
+				E6BA985F78F77A5F5608603E /* [CP] Check Pods Manifest.lock */,
 				36DA9DDF253A66FD001333A4 /* Sources */,
 				36DA9DE0253A66FD001333A4 /* Frameworks */,
 				36DA9DE1253A66FD001333A4 /* Resources */,
+				CA1638CB0DABFB850310471B /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -152,6 +251,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 36DA9E10253A66FE001333A4 /* Build configuration list for PBXNativeTarget "DiggyTests" */;
 			buildPhases = (
+				F14FADB5AC9675BBD882EB4A /* [CP] Check Pods Manifest.lock */,
 				36DA9DF5253A66FE001333A4 /* Sources */,
 				36DA9DF6253A66FE001333A4 /* Frameworks */,
 				36DA9DF7253A66FE001333A4 /* Resources */,
@@ -170,9 +270,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 36DA9E13253A66FE001333A4 /* Build configuration list for PBXNativeTarget "DiggyUITests" */;
 			buildPhases = (
+				87E9ACFF470F325241997DDE /* [CP] Check Pods Manifest.lock */,
 				36DA9E00253A66FE001333A4 /* Sources */,
 				36DA9E01253A66FE001333A4 /* Frameworks */,
 				36DA9E02253A66FE001333A4 /* Resources */,
+				30214994A21B0D5C3D1420F4 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -253,13 +355,119 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		30214994A21B0D5C3D1420F4 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Diggy-DiggyUITests/Pods-Diggy-DiggyUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Diggy-DiggyUITests/Pods-Diggy-DiggyUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Diggy-DiggyUITests/Pods-Diggy-DiggyUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		87E9ACFF470F325241997DDE /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Diggy-DiggyUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CA1638CB0DABFB850310471B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Diggy/Pods-Diggy-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Diggy/Pods-Diggy-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Diggy/Pods-Diggy-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E6BA985F78F77A5F5608603E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Diggy-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F14FADB5AC9675BBD882EB4A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-DiggyTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		36DA9DDF253A66FD001333A4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				36DA9DEB253A66FD001333A4 /* JobsViewController.swift in Sources */,
+				36DA9E43253B16C8001333A4 /* Job.swift in Sources */,
+				36DA9E39253B1268001333A4 /* APIRouter.swift in Sources */,
 				36DA9DE7253A66FD001333A4 /* AppDelegate.swift in Sources */,
+				36DA9E3E253B1507001333A4 /* APIClient.swift in Sources */,
 				36DA9DE9253A66FD001333A4 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -433,12 +641,13 @@
 		};
 		36DA9E0E253A66FE001333A4 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5535A8FED459179DDFFB7B3F /* Pods-Diggy.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = YEA3H4FQ86;
-				INFOPLIST_FILE = Diggy/Info.plist;
+				INFOPLIST_FILE = Diggy/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -452,12 +661,13 @@
 		};
 		36DA9E0F253A66FE001333A4 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1492A6609A81614873F18DE3 /* Pods-Diggy.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = YEA3H4FQ86;
-				INFOPLIST_FILE = Diggy/Info.plist;
+				INFOPLIST_FILE = Diggy/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -471,6 +681,7 @@
 		};
 		36DA9E11253A66FE001333A4 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0EAD3C806065FE8CB2A70522 /* Pods-DiggyTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -493,6 +704,7 @@
 		};
 		36DA9E12253A66FE001333A4 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A613E94EFBB8AA52AC1169F4 /* Pods-DiggyTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -515,6 +727,7 @@
 		};
 		36DA9E14253A66FE001333A4 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0741BDDA3DCC3EA6C8912E02 /* Pods-Diggy-DiggyUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -535,6 +748,7 @@
 		};
 		36DA9E15253A66FE001333A4 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 91AFFB5B574793A6C0550A93 /* Pods-Diggy-DiggyUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
