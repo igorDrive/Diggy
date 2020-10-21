@@ -6,37 +6,21 @@
 //
 
 import UIKit
+import Kingfisher
 
 class JobCell: UITableViewCell {
     
     static let cellId = "JobCell"
     
     func configureCell(job: Job) {
-//        DispatchQueue.main.async {
-////            self.logo.image = self.getImageFromJSON(from: job.companyLogo ?? "")
-////        }
+        let url = URL(string: job.companyLogo ?? "")
+        logo.kf.setImage(with: url)
+        
         titleLabel.text = job.title
-        
         descriptionLabel.attributedText = job.description.htmlToAttributedString
-    }
-    
-    func getImageFromJSON(from string: String) -> UIImage? {
-        guard let url = URL(string: string)
-        else {
-            print("Unable to create URL")
-            return nil
-        }
-        
-        var image: UIImage? = nil
-        do {
-            let data = try Data(contentsOf: url, options: [])
-            image = UIImage(data: data)
-        }
-        catch {
-            print(error.localizedDescription)
-        }
-        
-        return image
+        companyLabel.text = job.company
+        countryLabel.text = ", \(job.location)"
+        dateLabel.text = job.createdAt
     }
     
     lazy var logo: UIImageView = {
@@ -62,6 +46,30 @@ class JobCell: UITableViewCell {
         return label
     }()
     
+    lazy var companyLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 1
+        label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
+        return label
+    }()
+    
+    lazy var countryLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 1
+        label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
+        return label
+    }()
+    
+    lazy var dateLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 1
+        label.font = UIFont.systemFont(ofSize: 13, weight: .bold)
+        return label
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupView()
@@ -75,6 +83,8 @@ class JobCell: UITableViewCell {
         contentView.addSubview(logo)
         contentView.addSubview(titleLabel)
         contentView.addSubview(descriptionLabel)
+        contentView.addSubview(companyLabel)
+        contentView.addSubview(dateLabel)
 
         logo.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10).isActive = true
         logo.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 10).isActive = true
@@ -84,11 +94,22 @@ class JobCell: UITableViewCell {
         titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10).isActive = true
         titleLabel.leftAnchor.constraint(equalTo: logo.rightAnchor, constant: 10).isActive = true
         titleLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -10).isActive = true
+        
+        companyLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 5).isActive = true
+        companyLabel.leftAnchor.constraint(equalTo: logo.rightAnchor, constant: 10).isActive = true
+//        companyLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -10).isActive = true
 
+        countryLabel.leftAnchor.constraint(equalTo: companyLabel.rightAnchor, constant: 3).isActive = true
+        countryLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -10).isActive = true
+        
         descriptionLabel.topAnchor.constraint(equalTo: logo.bottomAnchor, constant: 10).isActive = true
         descriptionLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 10).isActive = true
         descriptionLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -10).isActive = true
-        descriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10).isActive = true
+        
+        dateLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 10).isActive = true
+        dateLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 10).isActive = true
+        dateLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: 10).isActive = true
+        dateLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10).isActive = true
     }
 }
 
