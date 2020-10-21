@@ -18,6 +18,7 @@
 		36DA9E39253B1268001333A4 /* APIRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36DA9E38253B1268001333A4 /* APIRouter.swift */; };
 		36DA9E3E253B1507001333A4 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36DA9E3D253B1507001333A4 /* APIClient.swift */; };
 		36DA9E43253B16C8001333A4 /* Job.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36DA9E42253B16C8001333A4 /* Job.swift */; };
+		42C8D7F6253E748000574702 /* JobCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C8D7F5253E748000574702 /* JobCell.swift */; };
 		AF4EC5668950D7BF9D3D57DF /* Pods_Diggy_DiggyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF1A72BEF84DF177DAC09D8 /* Pods_Diggy_DiggyUITests.framework */; };
 		C41433479EC789A1F17C8832 /* Pods_Diggy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83742E5B2151D78A0B1A5753 /* Pods_Diggy.framework */; };
 		F41D8A0C1456154407602E0B /* Pods_DiggyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E16E193B551EAE53768E2F87 /* Pods_DiggyTests.framework */; };
@@ -61,6 +62,7 @@
 		36DA9E38253B1268001333A4 /* APIRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRouter.swift; sourceTree = "<group>"; };
 		36DA9E3D253B1507001333A4 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		36DA9E42253B16C8001333A4 /* Job.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Job.swift; sourceTree = "<group>"; };
+		42C8D7F5253E748000574702 /* JobCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobCell.swift; sourceTree = "<group>"; };
 		5535A8FED459179DDFFB7B3F /* Pods-Diggy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Diggy.debug.xcconfig"; path = "Target Support Files/Pods-Diggy/Pods-Diggy.debug.xcconfig"; sourceTree = "<group>"; };
 		5BF1A72BEF84DF177DAC09D8 /* Pods_Diggy_DiggyUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Diggy_DiggyUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		83742E5B2151D78A0B1A5753 /* Pods_Diggy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Diggy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -122,8 +124,8 @@
 		36DA9DE5253A66FD001333A4 /* Diggy */ = {
 			isa = PBXGroup;
 			children = (
+				422B270A253FB75F009C18D2 /* View */,
 				36DA9E22253B1077001333A4 /* Controller */,
-				36DA9E24253B1084001333A4 /* View */,
 				36DA9E23253B107F001333A4 /* Model */,
 				36DA9E25253B10B4001333A4 /* Main */,
 				36DA9E2D253B1155001333A4 /* API */,
@@ -166,13 +168,6 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		36DA9E24253B1084001333A4 /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
 		36DA9E25253B10B4001333A4 /* Main */ = {
 			isa = PBXGroup;
 			children = (
@@ -200,6 +195,14 @@
 				36DA9E3D253B1507001333A4 /* APIClient.swift */,
 			);
 			path = API;
+			sourceTree = "<group>";
+		};
+		422B270A253FB75F009C18D2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				42C8D7F5253E748000574702 /* JobCell.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		50DC71C099BD505BD7DB2A0B /* Frameworks */ = {
@@ -469,6 +472,7 @@
 				36DA9DE7253A66FD001333A4 /* AppDelegate.swift in Sources */,
 				36DA9E3E253B1507001333A4 /* APIClient.swift in Sources */,
 				36DA9DE9253A66FD001333A4 /* SceneDelegate.swift in Sources */,
+				42C8D7F6253E748000574702 /* JobCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
