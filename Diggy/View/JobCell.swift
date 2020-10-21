@@ -6,37 +6,18 @@
 //
 
 import UIKit
+import Kingfisher
 
 class JobCell: UITableViewCell {
     
     static let cellId = "JobCell"
     
     func configureCell(job: Job) {
-//        DispatchQueue.main.async {
-////            self.logo.image = self.getImageFromJSON(from: job.companyLogo ?? "")
-////        }
+        let url = URL(string: job.companyLogo ?? "")
+        logo.kf.setImage(with: url)
+        
         titleLabel.text = job.title
-        
         descriptionLabel.attributedText = job.description.htmlToAttributedString
-    }
-    
-    func getImageFromJSON(from string: String) -> UIImage? {
-        guard let url = URL(string: string)
-        else {
-            print("Unable to create URL")
-            return nil
-        }
-        
-        var image: UIImage? = nil
-        do {
-            let data = try Data(contentsOf: url, options: [])
-            image = UIImage(data: data)
-        }
-        catch {
-            print(error.localizedDescription)
-        }
-        
-        return image
     }
     
     lazy var logo: UIImageView = {
