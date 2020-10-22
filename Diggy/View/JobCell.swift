@@ -13,13 +13,17 @@ class JobCell: UITableViewCell {
     static let cellId = "JobCell"
     
     func configureCell(job: Job) {
-        let url = URL(string: job.companyLogo ?? "")
-        logo.kf.setImage(with: url)
+        let image = UIImage(named: "no-image-available")
+        if let url = URL(string: job.companyLogo ?? "") {
+            logo.kf.setImage(with: url)
+        } else {
+            logo.image = image
+        }
         
         titleLabel.text = job.title
         descriptionLabel.attributedText = job.description.htmlToAttributedString
-        companyLabel.text = job.company
-        countryLabel.text = ", \(job.location)"
+        companyLabel.text = "\(job.company),"
+        countryLabel.text = job.location
         dateLabel.text = job.createdAt
     }
     
@@ -84,6 +88,7 @@ class JobCell: UITableViewCell {
         contentView.addSubview(titleLabel)
         contentView.addSubview(descriptionLabel)
         contentView.addSubview(companyLabel)
+        contentView.addSubview(countryLabel)
         contentView.addSubview(dateLabel)
 
         logo.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10).isActive = true
@@ -100,7 +105,8 @@ class JobCell: UITableViewCell {
 //        companyLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -10).isActive = true
 
         countryLabel.leftAnchor.constraint(equalTo: companyLabel.rightAnchor, constant: 3).isActive = true
-        countryLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -10).isActive = true
+        countryLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 5).isActive = true
+//        countryLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -10).isActive = true
         
         descriptionLabel.topAnchor.constraint(equalTo: logo.bottomAnchor, constant: 10).isActive = true
         descriptionLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 10).isActive = true
