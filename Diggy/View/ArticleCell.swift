@@ -25,7 +25,7 @@ class ArticleCell: UITableViewCell {
     
     func getImage(media: [Article.Media]) -> String? {
         if let media = media.first {
-            return media.metadata[1].url
+            return media.metadata[2].url
         } else {
             return nil
         }

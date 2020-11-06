@@ -10,10 +10,20 @@ class ArticlesViewController: UIViewController {
         }
     }
     
+    var currentGenre = BookGenre.hardCover {
+        didSet {
+            if oldValue != currentGenre {
+                fetchBooks()
+            }
+        }
+    }
+    
     private var articles: [Article] = []
+    private var books: [Book] = []
     
     var tableView: UITableView!
     var activityIndicator: UIActivityIndicatorView!
+    var segmentedControl: UISegmentedControl!
     
     func initActivityIndicator() {
         activityIndicator = UIActivityIndicatorView()
@@ -35,14 +45,27 @@ class ArticlesViewController: UIViewController {
         tableView.dataSource = self
         
         view.addSubview(tableView)
-        tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        tableView.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor).isActive = true
         tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
     
+    func initSegmentedControl() {
+        segmentedControl = UISegmentedControl(items: ["News", "Books"])
+        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
+        segmentedControl.selectedSegmentIndex = 0
+        segmentedControl.addTarget(self, action: #selector(handleSegmentChange), for: .valueChanged)
+        
+        view.addSubview(segmentedControl)
+        segmentedControl.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        segmentedControl.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        segmentedControl.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        initSegmentedControl()
         initTableView()
         initActivityIndicator()
 
@@ -58,6 +81,18 @@ class ArticlesViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         
         view.backgroundColor = .white
+        
+    }
+    
+    @objc func handleSegmentChange() {
+        
+        switch segmentedControl.selectedSegmentIndex {
+        case 0:
+            getArticles()
+        default:
+            fetchBooks()
+        }
+        tableView.reloadData()
     }
     
     @objc func jobsFilter() {
@@ -107,10 +142,23 @@ class ArticlesViewController: UIViewController {
     
     private func getArticles() {
         showLoadingIndicator()
-        NewsAPI.shared.fetchData(period: currentPeriod) { (articles) in
+        NewsAPI.shared.fetchNews(period: currentPeriod) { (articles) in
             self.hideLoadingIndicator()
             if let articles = articles {
                 self.articles = articles
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
+        }
+    }
+    
+    private func fetchBooks() {
+        showLoadingIndicator()
+        BookAPI.shared.fetchBooks(genre: currentGenre) { (books) in
+            self.hideLoadingIndicator()
+            if let books = books {
+                self.books = books
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }
@@ -126,10 +174,18 @@ extension ArticlesViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: ArticleCell.cellId, for: indexPath) as! ArticleCell
-        let article = articles[indexPath.row]
-        cell.configureCell(article: article)
-        return cell
+        if segmentedControl.selectedSegmentIndex == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: ArticleCell.cellId, for: indexPath) as! ArticleCell
+            let article = articles[indexPath.row]
+            cell.configureCell(article: article)
+            return cell
+        } else if segmentedControl.selectedSegmentIndex == 1 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: ArticleCell.cellId, for: indexPath) as! ArticleCell
+            let book = articles[indexPath.row]
+            cell.configureCell(article: article)
+            return cell
+        }
+        return UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

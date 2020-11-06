@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct APIConstants {
+struct APINewsConstants {
     private init() { }
     
     static let mostPopularBaseURL = "https://api.nytimes.com/svc/mostpopular/v2/emailed/"
@@ -25,7 +25,7 @@ class NewsAPI {
     
     private init() { }
     
-    func fetchData(period: Period, completion: @escaping ([Article]?) -> ()) {
+    func fetchNews(period: Period, completion: @escaping ([Article]?) -> ()) {
         guard let url = configureURL(period: period) else { return }
         let session = URLSession(configuration: .default)
         let task = session.dataTask(with: url) { (data, response, error) in
@@ -54,7 +54,7 @@ class NewsAPI {
     }
     
     private func configureURL(period: Period) -> URL? {
-        let urlString = "\(APIConstants.mostPopularBaseURL)\(period.rawValue).json?api-key=\(APIConstants.apiKey)"
+        let urlString = "\(APINewsConstants.mostPopularBaseURL)\(period.rawValue).json?api-key=\(APINewsConstants.apiKey)"
         return URL(string: urlString)
     }
 }
