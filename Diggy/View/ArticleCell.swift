@@ -78,8 +78,8 @@ class ArticleCell: UITableViewCell {
         bubbleBackgroundView.addSubview(descriptionLabel)
         
         titleLabel.topAnchor.constraint(equalTo: bubbleBackgroundView.topAnchor, constant: 8).isActive = true
-        titleLabel.leftAnchor.constraint(equalTo: bubbleBackgroundView.leftAnchor, constant: 14).isActive = true
-        titleLabel.rightAnchor.constraint(equalTo: bubbleBackgroundView.rightAnchor, constant: -8).isActive = true
+        titleLabel.leftAnchor.constraint(equalTo: bubbleBackgroundView.leftAnchor, constant: 21).isActive = true
+        titleLabel.rightAnchor.constraint(equalTo: bubbleBackgroundView.rightAnchor, constant: -21).isActive = true
         
         newsPicture.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8).isActive = true
         newsPicture.leftAnchor.constraint(equalTo: bubbleBackgroundView.leftAnchor, constant: 0).isActive = true
@@ -87,8 +87,8 @@ class ArticleCell: UITableViewCell {
         newsPicture.heightAnchor.constraint(equalToConstant: 230).isActive = true
         
         descriptionLabel.topAnchor.constraint(equalTo: newsPicture.bottomAnchor, constant: 8).isActive = true
-        descriptionLabel.leftAnchor.constraint(equalTo: bubbleBackgroundView.leftAnchor, constant: 14).isActive = true
-        descriptionLabel.rightAnchor.constraint(equalTo: bubbleBackgroundView.rightAnchor, constant: -8).isActive = true
+        descriptionLabel.leftAnchor.constraint(equalTo: bubbleBackgroundView.leftAnchor, constant: 21).isActive = true
+        descriptionLabel.rightAnchor.constraint(equalTo: bubbleBackgroundView.rightAnchor, constant: -21).isActive = true
         descriptionLabel.bottomAnchor.constraint(equalTo: bubbleBackgroundView.bottomAnchor, constant: -8).isActive = true
     }
 }

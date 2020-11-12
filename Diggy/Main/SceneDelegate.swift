@@ -17,7 +17,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         window = UIWindow(windowScene: windowScene)
-        let ariclesVC = ArticlesViewController()
+        let ariclesVC = MainViewController()
         let nav = UINavigationController(rootViewController: ariclesVC)
         window!.rootViewController = nav
 

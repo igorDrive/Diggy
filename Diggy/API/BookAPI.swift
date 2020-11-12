@@ -25,17 +25,16 @@ class BookAPI {
     
     private init() { }
     
-    func fetchBooks(genre: BookGenre,completion: @escaping ([Book]?) -> ()) {
-        guard let urlComponents = configureURL(with: genre) else { return }
+    func fetchBooks(genre: BookGenre, completion: @escaping ([Book]?) -> ()) {
+        guard let url = configureURL(with: genre) else { return }
         let session = URLSession(configuration: .default)
-        let urlRequest = URLRequest(url: urlComponents.url!)
-        let task = session.dataTask(with: urlRequest) { (data, response, error) in
+        let task = session.dataTask(with: url) { (data, response, error) in
             if error != nil {
                 completion(nil)
                 return
             }
             if let safeData = data {
-                print(safeData.printJSON())
+//                print(safeData.printJSON())
                 let results = self.parseJSON(bookData: safeData)
                 completion(results)
             }
@@ -55,23 +54,19 @@ class BookAPI {
         }
     }
     
-    private func configureURL(with param: BookGenre) -> URLComponents? {
-        let urlString = "\(APIBookConstants.bestSellersURL)\(param.rawValue).json"
-        var url = URLComponents(string: urlString)
-        url?.queryItems = [
-            URLQueryItem(name: "api-key", value: APIBookConstants.apiKey)
-        ]
-        return url
+    private func configureURL(with param: BookGenre) -> URL? {
+        let urlString = "\(APIBookConstants.bestSellersURL)\(param.rawValue).json?api-key=\(APIBookConstants.apiKey)"
+        return URL(string: urlString)
     }
 }
 
-extension Data
-{
-    func printJSON()
-    {
-        if let JSONString = String(data: self, encoding: String.Encoding.utf8)
-        {
-            print(JSONString)
-        }
-    }
-}
+//extension Data
+//{
+//    func printJSON()
+//    {
+//        if let JSONString = String(data: self, encoding: String.Encoding.utf8)
+//        {
+//            print(JSONString)
+//        }
+//    }
+//}

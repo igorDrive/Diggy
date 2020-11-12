@@ -1,6 +1,6 @@
 import UIKit
 
-class ArticlesViewController: UIViewController {
+class MainViewController: UIViewController {
     
     var currentPeriod = Period.thirtyDays {
         didSet {
@@ -24,6 +24,9 @@ class ArticlesViewController: UIViewController {
     var tableView: UITableView!
     var activityIndicator: UIActivityIndicatorView!
     var segmentedControl: UISegmentedControl!
+    
+//    let newsFilterButton = UIBarButtonItem(title: "News Filter", style: .plain, target: self, action: #selector(articlesFilter))
+//    let booksFilterButton = UIBarButtonItem(title: "Books Filter", style: .plain, target: self, action: #selector(booksFilter))
     
     func initActivityIndicator() {
         activityIndicator = UIActivityIndicatorView()
@@ -59,8 +62,8 @@ class ArticlesViewController: UIViewController {
         
         view.addSubview(segmentedControl)
         segmentedControl.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        segmentedControl.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        segmentedControl.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        segmentedControl.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16).isActive = true
+        segmentedControl.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16).isActive = true
     }
     
     override func viewDidLoad() {
@@ -70,14 +73,15 @@ class ArticlesViewController: UIViewController {
         initActivityIndicator()
 
         getArticles()
+        fetchBooks()
         
         tableView.register(ArticleCell.self, forCellReuseIdentifier: ArticleCell.cellId)
+        tableView.register(BookCell.self, forCellReuseIdentifier: BookCell.cellId)
         tableView.separatorStyle = .singleLine
         
-        let button1 = UIBarButtonItem(title: "Filter", style: .plain, target: self, action: #selector(jobsFilter))
-        self.navigationItem.rightBarButtonItem = button1
+        let newsFilterButton = UIBarButtonItem(title: "News Filter", style: .plain, target: self, action: #selector(articlesFilter))
+        self.navigationItem.rightBarButtonItem = newsFilterButton
         
-        navigationItem.title = "News"
         navigationController?.navigationBar.prefersLargeTitles = true
         
         view.backgroundColor = .white
@@ -89,13 +93,21 @@ class ArticlesViewController: UIViewController {
         switch segmentedControl.selectedSegmentIndex {
         case 0:
             getArticles()
+            
+            let newsFilterButton = UIBarButtonItem(title: "News Filter", style: .plain, target: self, action: #selector(articlesFilter))
+            self.navigationItem.rightBarButtonItem = newsFilterButton
+            navigationItem.title = "News"
         default:
             fetchBooks()
+            
+            let booksFilterButton = UIBarButtonItem(title: "Books Filter", style: .plain, target: self, action: #selector(booksFilter))
+            self.navigationItem.rightBarButtonItem = booksFilterButton
+            navigationItem.title = "Books"
         }
         tableView.reloadData()
     }
     
-    @objc func jobsFilter() {
+    @objc func articlesFilter() {
         let filterAlert = UIAlertController(title: "Choose period", message: "", preferredStyle: UIAlertController.Style.actionSheet)
         
         let oneActionButton = UIAlertAction(title: "1 day", style: .default) { (action: UIAlertAction) in
@@ -118,6 +130,31 @@ class ArticlesViewController: UIViewController {
             filterAlert.view.superview?.subviews[0].addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.dismissAlert)))
         }
     }
+    
+    @objc func booksFilter() {
+        let filterAlert = UIAlertController(title: "Choose type", message: "", preferredStyle: UIAlertController.Style.actionSheet)
+        
+        let hardcoverButton = UIAlertAction(title: "Hardcover Fiction", style: .default) { (action: UIAlertAction) in
+            self.currentGenre = .hardCover
+        }
+        
+        let papercoverButton = UIAlertAction(title: "Paperback Nonfiction", style: .default) { (action: UIAlertAction) in
+            self.currentGenre = .paperCover
+        }
+        
+        let ebookButton = UIAlertAction(title: "E-book Fiction", style: .default) { (action: UIAlertAction) in
+            self.currentGenre = .ebook
+        }
+        
+        filterAlert.addAction(hardcoverButton)
+        filterAlert.addAction(papercoverButton)
+        filterAlert.addAction(ebookButton)
+        
+        present(filterAlert, animated: true) {
+            filterAlert.view.superview?.subviews[0].addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.dismissAlert)))
+        }
+    }
+    
     
     @objc func dismissAlert() {
         self.dismiss(animated: true, completion: nil)
@@ -167,12 +204,7 @@ class ArticlesViewController: UIViewController {
     }
 }
 
-extension ArticlesViewController: UITableViewDelegate, UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        articles.count
-    }
-    
+extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if segmentedControl.selectedSegmentIndex == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: ArticleCell.cellId, for: indexPath) as! ArticleCell
@@ -180,14 +212,23 @@ extension ArticlesViewController: UITableViewDelegate, UITableViewDataSource {
             cell.configureCell(article: article)
             return cell
         } else if segmentedControl.selectedSegmentIndex == 1 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: ArticleCell.cellId, for: indexPath) as! ArticleCell
-            let book = articles[indexPath.row]
-            cell.configureCell(article: article)
+            let cell = tableView.dequeueReusableCell(withIdentifier: BookCell.cellId, for: indexPath) as! BookCell
+            let book = books[indexPath.row]
+            cell.configureCell(book: book)
             return cell
         }
         return UITableViewCell()
     }
     
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if segmentedControl.selectedSegmentIndex == 0 {
+            return articles.count
+        } else if segmentedControl.selectedSegmentIndex == 1 {
+        }
+        return books.count
+    }
+       
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
@@ -202,9 +243,21 @@ extension ArticlesViewController: UITableViewDelegate, UITableViewDataSource {
         navigationController?.pushViewController(controller, animated: true)
     }
     
+    private func presentBookController(book: Book) {
+        let controller = BookDetailsCiewController()
+        controller.book = book
+        navigationController?.pushViewController(controller, animated: true)
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let article = articles[indexPath.row]
+        let book = books[indexPath.row]
+        
+        if segmentedControl.selectedSegmentIndex == 0 {
         presentArticleController(article: article)
+        } else {
+            presentBookController(book: book)
+        }
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
