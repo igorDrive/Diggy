@@ -8,7 +8,7 @@
 import Foundation
 import WebKit
 
-class BookDetailsCiewController: UIViewController {
+class BookDetailsViewController: UIViewController {
     
     var book: Book? {
         didSet {

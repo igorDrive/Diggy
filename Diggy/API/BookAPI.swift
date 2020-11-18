@@ -34,7 +34,7 @@ class BookAPI {
                 return
             }
             if let safeData = data {
-//                print(safeData.printJSON())
+//                print(safeData.printJSON1())
                 let results = self.parseJSON(bookData: safeData)
                 completion(results)
             }
@@ -62,7 +62,7 @@ class BookAPI {
 
 //extension Data
 //{
-//    func printJSON()
+//    func printJSON1()
 //    {
 //        if let JSONString = String(data: self, encoding: String.Encoding.utf8)
 //        {

@@ -21,7 +21,9 @@
 		423C48AC255B73B1005E4495 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423C48AB255B73B1005E4495 /* Movie.swift */; };
 		423E98AB254A1A3D007A66A2 /* ArticleDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423E98AA254A1A3D007A66A2 /* ArticleDetailsViewController.swift */; };
 		423E98BA254A27D5007A66A2 /* NewsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423E98B9254A27D5007A66A2 /* NewsAPI.swift */; };
-		425CE439255A7BA10051AC3E /* BookDetailsCiewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425CE438255A7BA10051AC3E /* BookDetailsCiewController.swift */; };
+		425CE439255A7BA10051AC3E /* BookDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425CE438255A7BA10051AC3E /* BookDetailsViewController.swift */; };
+		42982F4F255DEDB800210204 /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42982F4E255DEDB800210204 /* MovieCell.swift */; };
+		42982F54255DF3AD00210204 /* MovieDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42982F53255DF3AD00210204 /* MovieDetailsViewController.swift */; };
 		42C8D7F6253E748000574702 /* ArticleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C8D7F5253E748000574702 /* ArticleCell.swift */; };
 		42E2E22F254509D5006A670D /* Article.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E2E22E254509D5006A670D /* Article.swift */; };
 		AF4EC5668950D7BF9D3D57DF /* Pods_Diggy_DiggyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF1A72BEF84DF177DAC09D8 /* Pods_Diggy_DiggyUITests.framework */; };
@@ -70,7 +72,9 @@
 		423C48AB255B73B1005E4495 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		423E98AA254A1A3D007A66A2 /* ArticleDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleDetailsViewController.swift; sourceTree = "<group>"; };
 		423E98B9254A27D5007A66A2 /* NewsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsAPI.swift; sourceTree = "<group>"; };
-		425CE438255A7BA10051AC3E /* BookDetailsCiewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookDetailsCiewController.swift; sourceTree = "<group>"; };
+		425CE438255A7BA10051AC3E /* BookDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookDetailsViewController.swift; sourceTree = "<group>"; };
+		42982F4E255DEDB800210204 /* MovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCell.swift; sourceTree = "<group>"; };
+		42982F53255DF3AD00210204 /* MovieDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsViewController.swift; sourceTree = "<group>"; };
 		42C8D7F5253E748000574702 /* ArticleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleCell.swift; sourceTree = "<group>"; };
 		42E2E22E254509D5006A670D /* Article.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Article.swift; sourceTree = "<group>"; };
 		5535A8FED459179DDFFB7B3F /* Pods-Diggy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Diggy.debug.xcconfig"; path = "Target Support Files/Pods-Diggy/Pods-Diggy.debug.xcconfig"; sourceTree = "<group>"; };
@@ -167,7 +171,8 @@
 			children = (
 				36DA9DEA253A66FD001333A4 /* MainViewController.swift */,
 				423E98AA254A1A3D007A66A2 /* ArticleDetailsViewController.swift */,
-				425CE438255A7BA10051AC3E /* BookDetailsCiewController.swift */,
+				425CE438255A7BA10051AC3E /* BookDetailsViewController.swift */,
+				42982F53255DF3AD00210204 /* MovieDetailsViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -206,6 +211,7 @@
 			children = (
 				42C8D7F5253E748000574702 /* ArticleCell.swift */,
 				420EED2A25537E890051CD2E /* BookCell.swift */,
+				42982F4E255DEDB800210204 /* MovieCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -480,14 +486,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42982F4F255DEDB800210204 /* MovieCell.swift in Sources */,
 				36DA9DEB253A66FD001333A4 /* MainViewController.swift in Sources */,
 				420EED3025537EA50051CD2E /* BookAPI.swift in Sources */,
 				423E98AB254A1A3D007A66A2 /* ArticleDetailsViewController.swift in Sources */,
 				423C48A7255B737C005E4495 /* MovieAPI.swift in Sources */,
+				42982F54255DF3AD00210204 /* MovieDetailsViewController.swift in Sources */,
 				42E2E22F254509D5006A670D /* Article.swift in Sources */,
 				36DA9DE7253A66FD001333A4 /* AppDelegate.swift in Sources */,
 				420EED2B25537E890051CD2E /* BookCell.swift in Sources */,
-				425CE439255A7BA10051AC3E /* BookDetailsCiewController.swift in Sources */,
+				425CE439255A7BA10051AC3E /* BookDetailsViewController.swift in Sources */,
 				423C48AC255B73B1005E4495 /* Movie.swift in Sources */,
 				420EED3F255381060051CD2E /* Book.swift in Sources */,
 				423E98BA254A27D5007A66A2 /* NewsAPI.swift in Sources */,
@@ -662,7 +670,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = YEA3H4FQ86;
+				DEVELOPMENT_TEAM = Y8YPJAWGS4;
 				INFOPLIST_FILE = Diggy/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -682,7 +690,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = YEA3H4FQ86;
+				DEVELOPMENT_TEAM = Y8YPJAWGS4;
 				INFOPLIST_FILE = Diggy/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

@@ -18,13 +18,23 @@ class MainViewController: UIViewController {
         }
     }
     
+    var currentOrder = MovieOrder.byTitle {
+        didSet {
+            if oldValue != currentOrder {
+                fetchMovies()
+            }
+        }
+    }
+    
     private var articles: [Article] = []
     private var books: [Book] = []
+    private var movies: [Movie] = []
     
     var tableView: UITableView!
     var activityIndicator: UIActivityIndicatorView!
     var segmentedControl: UISegmentedControl!
-    
+    var textField: UITextField!
+        
 //    let newsFilterButton = UIBarButtonItem(title: "News Filter", style: .plain, target: self, action: #selector(articlesFilter))
 //    let booksFilterButton = UIBarButtonItem(title: "Books Filter", style: .plain, target: self, action: #selector(booksFilter))
     
@@ -48,14 +58,14 @@ class MainViewController: UIViewController {
         tableView.dataSource = self
         
         view.addSubview(tableView)
-        tableView.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor).isActive = true
+        tableView.topAnchor.constraint(equalTo: textField.bottomAnchor).isActive = true
         tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
     
     func initSegmentedControl() {
-        segmentedControl = UISegmentedControl(items: ["News", "Books"])
+        segmentedControl = UISegmentedControl(items: ["News", "Books", "Movies"])
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
         segmentedControl.selectedSegmentIndex = 0
         segmentedControl.addTarget(self, action: #selector(handleSegmentChange), for: .valueChanged)
@@ -66,17 +76,40 @@ class MainViewController: UIViewController {
         segmentedControl.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16).isActive = true
     }
     
+    func initTextField() {
+        textField = UITextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.placeholder = "Enter text here"
+        textField.font = UIFont.systemFont(ofSize: 15)
+        textField.borderStyle = UITextField.BorderStyle.roundedRect
+//        textField.autocorrectionType = UITextAutocorrectionType.no
+//        textField.keyboardType = UIKeyboardType.default
+//        textField.returnKeyType = UIReturnKeyType.done
+//        textField.clearButtonMode = UITextField.ViewMode.whileEditing
+//        textField.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
+        textField.delegate = self
+        
+        view.addSubview(textField)
+        textField.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 8).isActive = true
+        textField.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16).isActive = true
+        textField.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16).isActive = true
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         initSegmentedControl()
+        initTextField()
         initTableView()
         initActivityIndicator()
 
+
         getArticles()
         fetchBooks()
+        fetchMovies()
         
         tableView.register(ArticleCell.self, forCellReuseIdentifier: ArticleCell.cellId)
         tableView.register(BookCell.self, forCellReuseIdentifier: BookCell.cellId)
+        tableView.register(MovieCell.self, forCellReuseIdentifier: MovieCell.cellId)
         tableView.separatorStyle = .singleLine
         
         let newsFilterButton = UIBarButtonItem(title: "News Filter", style: .plain, target: self, action: #selector(articlesFilter))
@@ -85,7 +118,7 @@ class MainViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         
         view.backgroundColor = .white
-        
+        textField.isHidden = true
     }
     
     @objc func handleSegmentChange() {
@@ -97,12 +130,24 @@ class MainViewController: UIViewController {
             let newsFilterButton = UIBarButtonItem(title: "News Filter", style: .plain, target: self, action: #selector(articlesFilter))
             self.navigationItem.rightBarButtonItem = newsFilterButton
             navigationItem.title = "News"
-        default:
+            
+            textField.isHidden = true
+        case 1:
             fetchBooks()
             
             let booksFilterButton = UIBarButtonItem(title: "Books Filter", style: .plain, target: self, action: #selector(booksFilter))
             self.navigationItem.rightBarButtonItem = booksFilterButton
             navigationItem.title = "Books"
+            
+            textField.isHidden = true
+        default:
+            fetchMovies()
+            
+            let moviesFilterButton = UIBarButtonItem(title: "Movies Order", style: .plain, target: self, action: #selector(moviesOrder))
+            self.navigationItem.rightBarButtonItem = moviesFilterButton
+            navigationItem.title = "Movie Reviews"
+            
+            textField.isHidden = false
         }
         tableView.reloadData()
     }
@@ -149,6 +194,30 @@ class MainViewController: UIViewController {
         filterAlert.addAction(hardcoverButton)
         filterAlert.addAction(papercoverButton)
         filterAlert.addAction(ebookButton)
+        
+        present(filterAlert, animated: true) {
+            filterAlert.view.superview?.subviews[0].addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.dismissAlert)))
+        }
+    }
+    
+    @objc func moviesOrder() {
+        let filterAlert = UIAlertController(title: "Choose movie order", message: "", preferredStyle: UIAlertController.Style.actionSheet)
+        
+        let titleButton = UIAlertAction(title: "By title", style: .default) { (action: UIAlertAction) in
+            self.currentOrder = .byTitle
+        }
+        
+        let openingDateButton = UIAlertAction(title: "By opening date", style: .default) { (action: UIAlertAction) in
+            self.currentOrder = .byOpeningDay
+        }
+        
+        let publicationDateButton = UIAlertAction(title: "By publication date", style: .default) { (action: UIAlertAction) in
+            self.currentOrder = .byDate
+        }
+        
+        filterAlert.addAction(titleButton)
+        filterAlert.addAction(openingDateButton)
+        filterAlert.addAction(publicationDateButton)
         
         present(filterAlert, animated: true) {
             filterAlert.view.superview?.subviews[0].addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.dismissAlert)))
@@ -202,6 +271,19 @@ class MainViewController: UIViewController {
             }
         }
     }
+    
+    private func fetchMovies() {
+        showLoadingIndicator()
+        MovieAPI.shared.fetchMovies(order: currentOrder) { (movies) in
+            self.hideLoadingIndicator()
+            if let movies = movies {
+                self.movies = movies
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
+        }
+    }
 }
 
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
@@ -216,6 +298,11 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             let book = books[indexPath.row]
             cell.configureCell(book: book)
             return cell
+        } else if segmentedControl.selectedSegmentIndex == 2 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: MovieCell.cellId, for: indexPath) as! MovieCell
+            let movie = movies[indexPath.row]
+            cell.configureCell(movie: movie)
+            return cell
         }
         return UITableViewCell()
     }
@@ -225,8 +312,11 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         if segmentedControl.selectedSegmentIndex == 0 {
             return articles.count
         } else if segmentedControl.selectedSegmentIndex == 1 {
+            return books.count
+        } else if segmentedControl.selectedSegmentIndex == 2 {
+            return movies.count
         }
-        return books.count
+        return 3
     }
        
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -244,20 +334,53 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     private func presentBookController(book: Book) {
-        let controller = BookDetailsCiewController()
+        let controller = BookDetailsViewController()
         controller.book = book
+        navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    private func presentMovieController(movie: Movie) {
+        let controller = MovieDetailsViewController()
+        controller.movie = movie
         navigationController?.pushViewController(controller, animated: true)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let article = articles[indexPath.row]
         let book = books[indexPath.row]
+        let movie = movies[indexPath.row]
         
         if segmentedControl.selectedSegmentIndex == 0 {
         presentArticleController(article: article)
-        } else {
+        } else if segmentedControl.selectedSegmentIndex == 1 {
             presentBookController(book: book)
+        } else {
+            presentMovieController(movie: movie)
         }
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+}
+
+extension MainViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.endEditing(true)
+        return true
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        showLoadingIndicator()
+        if let movieName = textField.text {
+            MovieAPI.shared.fetchMovies(movieName: movieName) { (movies) in
+                self.hideLoadingIndicator()
+                if let movies = movies {
+                    self.movies = movies
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                        textField.text = ""
+                    }
+                }
+            }
+        }
     }
 }
