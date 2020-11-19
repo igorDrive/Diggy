@@ -23,14 +23,6 @@ class MovieCell: UITableViewCell {
         descriptionLabel.text = movie.shortSummary
     }
     
-//    func getImage(multimedia: Multimedia) -> String? {
-//        if let multimedia = multimedia.titleCover {
-//            return multimedia
-//        } else {
-//            return nil
-//        }
-//    }
-    
     lazy var reviewCover: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false

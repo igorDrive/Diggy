@@ -316,7 +316,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         } else if segmentedControl.selectedSegmentIndex == 2 {
             return movies.count
         }
-        return 3
+        return 0
     }
        
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -346,15 +346,15 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let article = articles[indexPath.row]
-        let book = books[indexPath.row]
-        let movie = movies[indexPath.row]
         
         if segmentedControl.selectedSegmentIndex == 0 {
-        presentArticleController(article: article)
+            let article = articles[indexPath.row]
+            presentArticleController(article: article)
         } else if segmentedControl.selectedSegmentIndex == 1 {
+            let book = books[indexPath.row]
             presentBookController(book: book)
-        } else {
+        } else if segmentedControl.selectedSegmentIndex == 2 {
+            let movie = movies[indexPath.row]
             presentMovieController(movie: movie)
         }
         tableView.deselectRow(at: indexPath, animated: true)
