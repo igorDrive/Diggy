@@ -39,6 +39,7 @@ class MainViewController: UIViewController {
     var activityIndicator: UIActivityIndicatorView!
     var segmentedControl: UISegmentedControl!
     var textField: UITextField!
+    var searchBar: UISearchBar!
         
 //    let newsFilterButton = UIBarButtonItem(title: "News Filter", style: .plain, target: self, action: #selector(articlesFilter))
 //    let booksFilterButton = UIBarButtonItem(title: "Books Filter", style: .plain, target: self, action: #selector(booksFilter))
@@ -63,7 +64,7 @@ class MainViewController: UIViewController {
         tableView.dataSource = self
         
         view.addSubview(tableView)
-        tableView.topAnchor.constraint(equalTo: textField.bottomAnchor).isActive = true
+        tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor).isActive = true
         tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
@@ -95,16 +96,36 @@ class MainViewController: UIViewController {
 //        textField.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
         textField.delegate = self
         
-        view.addSubview(textField)
-        textField.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 8).isActive = true
-        textField.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16).isActive = true
-        textField.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16).isActive = true
+
+    }
+    
+    func initSearchBar() {
+        searchBar = UISearchBar(frame: .zero)
+        searchBar.searchBarStyle = .minimal
+        searchBar.barStyle = .default
+        searchBar.isTranslucent = true
+        searchBar.barTintColor = .white
+        searchBar.placeholder = "Search Title"
+        searchBar.delegate = self
+        searchBar.searchTextField.textColor = .black
+        searchBar.searchTextField.tintColor = .systemBlue
+        searchBar.searchTextField.leftView?.tintColor = UIColor(white: 0.8, alpha: 1)
+        searchBar.searchTextField.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        searchBar.searchTextField.backgroundColor = UIColor(white: 1, alpha: 0.1)
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(searchBar)
+        searchBar.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        searchBar.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 8).isActive = true
+        searchBar.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16).isActive = true
+        searchBar.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16).isActive = true
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         initSegmentedControl()
-        initTextField()
+        initSearchBar()
         initTableView()
         initActivityIndicator()
         
@@ -412,5 +433,29 @@ extension MainViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.endEditing(true)
         return true
+    }
+}
+
+extension MainViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.count > 0 {
+            isFiltering = true
+        } else {
+            isFiltering = false
+        }
+        if isFiltering == false {
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+        if searchText.count > 0 {
+            if segmentedControl.selectedSegmentIndex == 0 {
+                searchNewsQueriesLocally(query: searchText)
+            } else if segmentedControl.selectedSegmentIndex == 1 {
+                searchBooksQueriesLocally(query: searchText)
+            } else if segmentedControl.selectedSegmentIndex == 2 {
+                searchMoviesFromAPI(movieName: searchText)
+            }
+        }
     }
 }
