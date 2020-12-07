@@ -18,7 +18,7 @@ class MainViewController: UIViewController {
         }
     }
     
-    var currentOrder = MovieOrder.byTitle {
+    var currentOrder = MovieFilter.byOpeningDay {
         didSet {
             if oldValue != currentOrder {
                 fetchMovies()
@@ -29,6 +29,11 @@ class MainViewController: UIViewController {
     private var articles: [Article] = []
     private var books: [Book] = []
     private var movies: [Movie] = []
+    
+    private var filteredArticles: [Article] = []
+    private var filteredBooks: [Book] = []
+
+    private var isFiltering = false
     
     var tableView: UITableView!
     var activityIndicator: UIActivityIndicatorView!
@@ -68,7 +73,7 @@ class MainViewController: UIViewController {
         segmentedControl = UISegmentedControl(items: ["News", "Books", "Movies"])
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
         segmentedControl.selectedSegmentIndex = 0
-        segmentedControl.addTarget(self, action: #selector(handleSegmentChange), for: .valueChanged)
+        segmentedControl.addTarget(self, action: #selector(fetchData), for: .valueChanged)
         
         view.addSubview(segmentedControl)
         segmentedControl.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
@@ -79,9 +84,10 @@ class MainViewController: UIViewController {
     func initTextField() {
         textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = "Enter text here"
+        textField.placeholder = "Title search"
         textField.font = UIFont.systemFont(ofSize: 15)
         textField.borderStyle = UITextField.BorderStyle.roundedRect
+        textField.clearButtonMode = .always
 //        textField.autocorrectionType = UITextAutocorrectionType.no
 //        textField.keyboardType = UIKeyboardType.default
 //        textField.returnKeyType = UIReturnKeyType.done
@@ -101,27 +107,20 @@ class MainViewController: UIViewController {
         initTextField()
         initTableView()
         initActivityIndicator()
-
-
-        getArticles()
-        fetchBooks()
-        fetchMovies()
         
         tableView.register(ArticleCell.self, forCellReuseIdentifier: ArticleCell.cellId)
         tableView.register(BookCell.self, forCellReuseIdentifier: BookCell.cellId)
         tableView.register(MovieCell.self, forCellReuseIdentifier: MovieCell.cellId)
         tableView.separatorStyle = .singleLine
         
-        let newsFilterButton = UIBarButtonItem(title: "News Filter", style: .plain, target: self, action: #selector(articlesFilter))
-        self.navigationItem.rightBarButtonItem = newsFilterButton
-        
         navigationController?.navigationBar.prefersLargeTitles = true
         
         view.backgroundColor = .white
-        textField.isHidden = true
+        
+        fetchData()
     }
     
-    @objc func handleSegmentChange() {
+    @objc func fetchData() {
         
         switch segmentedControl.selectedSegmentIndex {
         case 0:
@@ -131,7 +130,6 @@ class MainViewController: UIViewController {
             self.navigationItem.rightBarButtonItem = newsFilterButton
             navigationItem.title = "News"
             
-            textField.isHidden = true
         case 1:
             fetchBooks()
             
@@ -139,7 +137,6 @@ class MainViewController: UIViewController {
             self.navigationItem.rightBarButtonItem = booksFilterButton
             navigationItem.title = "Books"
             
-            textField.isHidden = true
         default:
             fetchMovies()
             
@@ -147,7 +144,6 @@ class MainViewController: UIViewController {
             self.navigationItem.rightBarButtonItem = moviesFilterButton
             navigationItem.title = "Movie Reviews"
             
-            textField.isHidden = false
         }
         tableView.reloadData()
     }
@@ -274,7 +270,7 @@ class MainViewController: UIViewController {
     
     private func fetchMovies() {
         showLoadingIndicator()
-        MovieAPI.shared.fetchMovies(order: currentOrder) { (movies) in
+        MovieAPI.shared.fetchMovies(filter: currentOrder) { (movies) in
             self.hideLoadingIndicator()
             if let movies = movies {
                 self.movies = movies
@@ -290,12 +286,12 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if segmentedControl.selectedSegmentIndex == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: ArticleCell.cellId, for: indexPath) as! ArticleCell
-            let article = articles[indexPath.row]
+            let article = isFiltering ? filteredArticles[indexPath.row] : articles[indexPath.row]
             cell.configureCell(article: article)
             return cell
         } else if segmentedControl.selectedSegmentIndex == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: BookCell.cellId, for: indexPath) as! BookCell
-            let book = books[indexPath.row]
+            let book = isFiltering ? filteredBooks[indexPath.row] : books[indexPath.row]
             cell.configureCell(book: book)
             return cell
         } else if segmentedControl.selectedSegmentIndex == 2 {
@@ -310,9 +306,9 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if segmentedControl.selectedSegmentIndex == 0 {
-            return articles.count
+            return isFiltering ? filteredArticles.count : articles.count
         } else if segmentedControl.selectedSegmentIndex == 1 {
-            return books.count
+            return isFiltering ? filteredBooks.count : books.count
         } else if segmentedControl.selectedSegmentIndex == 2 {
             return movies.count
         }
@@ -359,28 +355,62 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }
+    
+    func searchMoviesFromAPI(movieName: String) {
+        showLoadingIndicator()
+        MovieAPI.shared.fetchMovies(search: movieName) { (movies) in
+            self.hideLoadingIndicator()
+            if let movies = movies {
+                self.movies = movies
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
+        }
+    }
+    
+    func searchNewsQueriesLocally(query: String) {
+        filteredArticles = articles.filter({ (article) in
+            article.title.range(of: query, options: .caseInsensitive) != nil
+        })
+        tableView.reloadData()
+    }
+    
+    func searchBooksQueriesLocally(query: String) {
+        filteredBooks = books.filter({ (book) in
+            book.title.range(of: query, options: .caseInsensitive) != nil
+        })
+        tableView.reloadData()
+    }
 }
 
 extension MainViewController: UITextFieldDelegate {
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.endEditing(true)
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if let text = textField.text?.trimmingCharacters(in: .whitespaces), text .count > 0 {
+            isFiltering = true
+        } else {
+            isFiltering = false
+        }
+        if isFiltering == false {
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+        if let searchQuery = textField.text {
+            if segmentedControl.selectedSegmentIndex == 0 {
+                searchNewsQueriesLocally(query: searchQuery)
+            } else if segmentedControl.selectedSegmentIndex == 1 {
+                searchBooksQueriesLocally(query: searchQuery)
+            } else if segmentedControl.selectedSegmentIndex == 2 {
+                searchMoviesFromAPI(movieName: searchQuery)
+            }
+        }
         return true
     }
     
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        showLoadingIndicator()
-        if let movieName = textField.text {
-            MovieAPI.shared.fetchMovies(movieName: movieName) { (movies) in
-                self.hideLoadingIndicator()
-                if let movies = movies {
-                    self.movies = movies
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                        textField.text = ""
-                    }
-                }
-            }
-        }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.endEditing(true)
+        return true
     }
 }
