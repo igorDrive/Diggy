@@ -142,27 +142,26 @@ class MainViewController: UIViewController {
     }
     
     @objc func fetchData() {
+        let newsFilterButton = UIBarButtonItem(image: UIImage(named: "filter")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(articlesFilter))
+        self.navigationItem.rightBarButtonItem = newsFilterButton
         
         switch segmentedControl.selectedSegmentIndex {
         case 0:
             getArticles()
             
-            let newsFilterButton = UIBarButtonItem(title: "News Filter", style: .plain, target: self, action: #selector(articlesFilter))
-            self.navigationItem.rightBarButtonItem = newsFilterButton
+           
             navigationItem.title = "News"
             
         case 1:
             fetchBooks()
             
-            let booksFilterButton = UIBarButtonItem(title: "Books Filter", style: .plain, target: self, action: #selector(booksFilter))
-            self.navigationItem.rightBarButtonItem = booksFilterButton
+
             navigationItem.title = "Books"
             
         default:
             fetchMovies()
             
-            let moviesFilterButton = UIBarButtonItem(title: "Movies Order", style: .plain, target: self, action: #selector(moviesOrder))
-            self.navigationItem.rightBarButtonItem = moviesFilterButton
+
             navigationItem.title = "Movie Reviews"
             
         }
