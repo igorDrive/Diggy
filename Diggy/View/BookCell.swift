@@ -26,7 +26,8 @@ class BookCell: UITableViewCell {
     lazy var bookCover: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
-        image.contentMode = .scaleAspectFit
+        image.contentMode = .scaleAspectFill
+        image.clipsToBounds = true
         return image
     }()
     
@@ -72,10 +73,10 @@ class BookCell: UITableViewCell {
         bookCover.topAnchor.constraint(equalTo: bubbleBackgroundView.topAnchor, constant: 0).isActive = true
         bookCover.leftAnchor.constraint(equalTo: bubbleBackgroundView.leftAnchor, constant: 16).isActive = true
         bookCover.bottomAnchor.constraint(equalTo: bubbleBackgroundView.bottomAnchor, constant: -8).isActive = true
-        bookCover.heightAnchor.constraint(equalToConstant: 230).isActive = true
-        bookCover.widthAnchor.constraint(equalToConstant: 120).isActive = true
+        bookCover.heightAnchor.constraint(equalToConstant: 220).isActive = true
+        bookCover.widthAnchor.constraint(equalToConstant: 140).isActive = true
 
-        titleLabel.topAnchor.constraint(equalTo: bubbleBackgroundView.topAnchor, constant: 18).isActive = true
+        titleLabel.topAnchor.constraint(equalTo: bubbleBackgroundView.topAnchor, constant: 0).isActive = true
         titleLabel.leftAnchor.constraint(equalTo: bookCover.rightAnchor, constant: 8).isActive = true
         titleLabel.rightAnchor.constraint(equalTo: bubbleBackgroundView.rightAnchor, constant: -16).isActive = true
         

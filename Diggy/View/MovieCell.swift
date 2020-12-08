@@ -35,7 +35,7 @@ class MovieCell: UITableViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
-        label.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        label.font = UIFont.systemFont(ofSize: 15, weight: .bold)
         return label
     }()
     
@@ -70,21 +70,20 @@ class MovieCell: UITableViewCell {
         bubbleBackgroundView.addSubview(titleLabel)
         bubbleBackgroundView.addSubview(descriptionLabel)
         
-        reviewCover.topAnchor.constraint(equalTo: bubbleBackgroundView.topAnchor, constant: 8).isActive = true
+        reviewCover.topAnchor.constraint(equalTo: bubbleBackgroundView.topAnchor, constant: 0).isActive = true
         reviewCover.leftAnchor.constraint(equalTo: bubbleBackgroundView.leftAnchor, constant: 16).isActive = true
         reviewCover.bottomAnchor.constraint(equalTo: bubbleBackgroundView.bottomAnchor, constant: -8).isActive = true
         reviewCover.widthAnchor.constraint(equalToConstant: 140).isActive = true
         reviewCover.heightAnchor.constraint(equalToConstant: 100).isActive = true
 
-        titleLabel.topAnchor.constraint(equalTo: bubbleBackgroundView.topAnchor, constant: 8).isActive = true
-        titleLabel.leftAnchor.constraint(equalTo: reviewCover.rightAnchor, constant: 16).isActive = true
+        titleLabel.topAnchor.constraint(equalTo: bubbleBackgroundView.topAnchor, constant: 0).isActive = true
+        titleLabel.leftAnchor.constraint(equalTo: reviewCover.rightAnchor, constant: 8).isActive = true
         titleLabel.rightAnchor.constraint(equalTo: bubbleBackgroundView.rightAnchor, constant: -16).isActive = true
         titleLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
 
-        
         descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 0).isActive = true
-        descriptionLabel.leftAnchor.constraint(equalTo: reviewCover.rightAnchor, constant: 16).isActive = true
+        descriptionLabel.leftAnchor.constraint(equalTo: reviewCover.rightAnchor, constant: 8).isActive = true
         descriptionLabel.rightAnchor.constraint(equalTo: bubbleBackgroundView.rightAnchor, constant: -16).isActive = true
-        descriptionLabel.bottomAnchor.constraint(equalTo: reviewCover.bottomAnchor, constant: 0).isActive = true
+        descriptionLabel.bottomAnchor.constraint(equalTo: bubbleBackgroundView.bottomAnchor, constant: -8).isActive = true
     }
 }
