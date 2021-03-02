@@ -38,10 +38,7 @@ class MainViewController: UIViewController {
     var tableView: UITableView!
     var activityIndicator: UIActivityIndicatorView!
     var segmentedControl: UISegmentedControl!
-    var textField: UITextField!
-        
-//    let newsFilterButton = UIBarButtonItem(title: "News Filter", style: .plain, target: self, action: #selector(articlesFilter))
-//    let booksFilterButton = UIBarButtonItem(title: "Books Filter", style: .plain, target: self, action: #selector(booksFilter))
+    var searchBar: UISearchBar!
     
     func initActivityIndicator() {
         activityIndicator = UIActivityIndicatorView()
@@ -63,7 +60,7 @@ class MainViewController: UIViewController {
         tableView.dataSource = self
         
         view.addSubview(tableView)
-        tableView.topAnchor.constraint(equalTo: textField.bottomAnchor).isActive = true
+        tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 8).isActive = true
         tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
@@ -81,30 +78,33 @@ class MainViewController: UIViewController {
         segmentedControl.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16).isActive = true
     }
     
-    func initTextField() {
-        textField = UITextField()
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = "Title search"
-        textField.font = UIFont.systemFont(ofSize: 15)
-        textField.borderStyle = UITextField.BorderStyle.roundedRect
-        textField.clearButtonMode = .always
-//        textField.autocorrectionType = UITextAutocorrectionType.no
-//        textField.keyboardType = UIKeyboardType.default
-//        textField.returnKeyType = UIReturnKeyType.done
-//        textField.clearButtonMode = UITextField.ViewMode.whileEditing
-//        textField.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
-        textField.delegate = self
+    func initSearchBar() {
+        searchBar = UISearchBar(frame: .zero)
+        searchBar.searchBarStyle = .minimal
+        searchBar.barStyle = .default
+        searchBar.isTranslucent = true
+        searchBar.barTintColor = .white
+        searchBar.placeholder = "Search Title"
+        searchBar.delegate = self
+        searchBar.searchTextField.textColor = .black
+        searchBar.searchTextField.tintColor = .systemBlue
+        searchBar.searchTextField.leftView?.tintColor = UIColor(white: 0.8, alpha: 1)
+        searchBar.searchTextField.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        searchBar.searchTextField.backgroundColor = UIColor(white: 1, alpha: 0.1)
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
         
-        view.addSubview(textField)
-        textField.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 8).isActive = true
-        textField.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16).isActive = true
-        textField.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16).isActive = true
+        view.addSubview(searchBar)
+        searchBar.heightAnchor.constraint(equalToConstant: 32).isActive = true
+        searchBar.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 8).isActive = true
+        searchBar.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 8).isActive = true
+        searchBar.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -8).isActive = true
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         initSegmentedControl()
-        initTextField()
+        initSearchBar()
         initTableView()
         initActivityIndicator()
         
@@ -126,24 +126,23 @@ class MainViewController: UIViewController {
         case 0:
             getArticles()
             
-            let newsFilterButton = UIBarButtonItem(title: "News Filter", style: .plain, target: self, action: #selector(articlesFilter))
+            let newsFilterButton = UIBarButtonItem(image: UIImage(named: "filter-2")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(articlesFilter))
             self.navigationItem.rightBarButtonItem = newsFilterButton
             navigationItem.title = "News"
             
         case 1:
             fetchBooks()
             
-            let booksFilterButton = UIBarButtonItem(title: "Books Filter", style: .plain, target: self, action: #selector(booksFilter))
+            let booksFilterButton = UIBarButtonItem(image: UIImage(named: "filter-2")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(booksFilter))
             self.navigationItem.rightBarButtonItem = booksFilterButton
             navigationItem.title = "Books"
             
         default:
             fetchMovies()
             
-            let moviesFilterButton = UIBarButtonItem(title: "Movies Order", style: .plain, target: self, action: #selector(moviesOrder))
-            self.navigationItem.rightBarButtonItem = moviesFilterButton
+            let movieFilterButton = UIBarButtonItem(image: UIImage(named: "filter-2")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(moviesOrder))
+            self.navigationItem.rightBarButtonItem = movieFilterButton
             navigationItem.title = "Movie Reviews"
-            
         }
         tableView.reloadData()
     }
@@ -384,10 +383,9 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-extension MainViewController: UITextFieldDelegate {
-    
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if let text = textField.text?.trimmingCharacters(in: .whitespaces), text .count > 0 {
+extension MainViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.count > 0 {
             isFiltering = true
         } else {
             isFiltering = false
@@ -397,20 +395,14 @@ extension MainViewController: UITextFieldDelegate {
                 self.tableView.reloadData()
             }
         }
-        if let searchQuery = textField.text {
+        if searchText.count > 0 {
             if segmentedControl.selectedSegmentIndex == 0 {
-                searchNewsQueriesLocally(query: searchQuery)
+                searchNewsQueriesLocally(query: searchText)
             } else if segmentedControl.selectedSegmentIndex == 1 {
-                searchBooksQueriesLocally(query: searchQuery)
+                searchBooksQueriesLocally(query: searchText)
             } else if segmentedControl.selectedSegmentIndex == 2 {
-                searchMoviesFromAPI(movieName: searchQuery)
+                searchMoviesFromAPI(movieName: searchText)
             }
         }
-        return true
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.endEditing(true)
-        return true
     }
 }
